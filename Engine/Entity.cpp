@@ -14,10 +14,14 @@ void Entity::Draw(Graphics & gfx) const
 void Entity::Move(Keyboard & kbd) 
 {
 	// "Gravity"
-	loc.y++;
+	//loc.y++;
 
 	bool strafe = false;
-	
+	if (kbd.KeyIsPressed('W')) // for testing purposes
+	{
+		loc.y--;
+	}
+
 	if (kbd.KeyIsPressed('A'))
 	{
 		loc.x--;
@@ -29,39 +33,14 @@ void Entity::Move(Keyboard & kbd)
 		strafe = true;
 	}
 
-	//if (kbd.KeyIsPressed(VK_SPACE))
-	//{
-	//	loc.y-=2;
-	//	if (kbd.KeyIsPressed('A')/*&&kbd.KeyIsPressed(VK_SPACE)*/)
-	//	{
-	//		loc.y-=2;
-	//		loc.x--;
-	//	}
-	//	else if (kbd.KeyIsPressed('D'))
-	//	{
-	//		loc.y-=2;
-	//		loc.x++;
-	//	}
-	//}
-
-	/*if (kbd.KeyIsPressed('W'))
-	{
-	loc.y--;
-	}*/
-
-	/*if (kbd.KeyIsPressed('S'))
-	{
-		loc.y++;
-	}*/
 }
 
 void Entity::WNDBorder() 
-
 {
 	const int right = loc.x + width;
-	if (loc.x < 0)
+	if (loc.x <= 4)
 	{
-		loc.x = 0;
+		loc.x = 4;
 	}
 	else if (right >= Graphics::ScreenWidth)
 	{
@@ -69,9 +48,9 @@ void Entity::WNDBorder()
 	}
 
 	const int bottom = loc.y + height;
-	if (loc.y < 0)
+	if (loc.y <= 4)
 	{
-		loc.y = 0;
+		loc.y = 4;
 	}
 	else if (bottom >= Graphics::ScreenHeight)
 	{
@@ -79,24 +58,21 @@ void Entity::WNDBorder()
 	}
 }
 
-bool Entity::Testoroni()
-{
-	return false;
-}
 
 void Entity::Test(Keyboard& kbd)
 {
 	if (kbd.KeyIsPressed(VK_SPACE))
 	{
-		loc.y -= 2;
-		if (kbd.KeyIsPressed('A')/*&&kbd.KeyIsPressed(VK_SPACE)*/)
+		loc.y --;
+
+		if (kbd.KeyIsPressed('A'))
 		{
-			loc.y -= 2;
+			loc.y --;
 			loc.x--;
 		}
 		else if (kbd.KeyIsPressed('D'))
 		{
-			loc.y -= 2;
+			loc.y --;
 			loc.x++;
 		}
 	}

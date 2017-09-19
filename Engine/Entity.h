@@ -2,6 +2,9 @@
 #include "Graphics.h"
 #include "Keyboard.h"
 #include "Locations.h"
+#include "Platforms.h"
+
+using namespace std;
 
 class Entity
 {
@@ -15,7 +18,7 @@ public:
 	void Move(Keyboard& kbd);
 	void WNDBorder();
 	void Test(Keyboard& kbd);
-	bool Testoroni();
+
 
 	Location loc;
 	static constexpr int width = 10;

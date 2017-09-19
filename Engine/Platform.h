@@ -9,15 +9,14 @@ class Platform
 {
 public:
 	Platform();
-	void InitBoxes(std::mt19937& rng)
+	void InitBoxes(mt19937& rng)
 	{
 		Pos.x = PosX(rng);
 		Pos.y = PosY(rng);
-		Dim.x = DrawCordX(rng);
-		Dim.y = DrawCordY(rng);
+		Pos.width = DrawCordX(rng);
+		Pos.height = DrawCordY(rng);
 	}
 	void DrawBox(Graphics& gfx);
-	bool Colliding()const;
 	void UpdateBoxCol(Entity& player);
 
 private:
@@ -26,9 +25,8 @@ private:
 	uniform_int_distribution<int> DrawCordX;
 	uniform_int_distribution<int> DrawCordY;
 	
-
-	Location Pos,Dim;
-	bool IsColliding = false;
+	Color c = Colors::Green;
+	Location Pos;
 	
 
 };

@@ -49,9 +49,11 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 	Entity player;
+
+	static constexpr int dex = 10;
+
+	Platform platform[dex];
+
+
 	
-
-
-	static constexpr int index = 10;
-	Platform Box[index];
 };

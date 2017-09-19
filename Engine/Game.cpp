@@ -17,7 +17,7 @@
  *																						  *
  *	You should have received a copy of the GNU General Public License					  *
  *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
- ******************************************************************************************/
+ *****************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
 
@@ -27,11 +27,11 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	player({ 400,300 }),
 	rng(rd())
-
+	
 {
-	for (int i = 0; i < index; i++)
+	for (int i = 0; i < dex; i++)
 	{
-		Box[i].InitBoxes(rng);
+		platform[i].InitBoxes(rng);
 	}
 }
 
@@ -47,22 +47,25 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+																											//Note to myself collsion calculation always AFTER playermovement.!!!!!
 	player.Move(wnd.kbd);
+	player.Test(wnd.kbd);                                
 	player.WNDBorder();
 
-	for (int i = 0; i < index; i++)
+	for (int i = 0; i < dex; i++)
 	{
-		Box[i].UpdateBoxCol(player);
+		platform[i].UpdateBoxCol(player);
 	}
+	
 	
 }
 
 void Game::ComposeFrame()
 {
 	player.Draw(gfx);
-
-	for (int i = 0; i < index; i++)
+	for (int i = 0; i < dex; i++)
 	{
-		Box[i].DrawBox(gfx);
+		platform[i].DrawBox(gfx);
 	}
-}
+	
+} 
