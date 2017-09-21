@@ -50,8 +50,10 @@ private:
 	std::mt19937 rng;
 	Entity player;
 
-	static constexpr int dex = 10;
 
+
+	// Array for the platforms / still testing stuff
+	static constexpr int dex = 1;
 	Platform platform[dex];
 
 

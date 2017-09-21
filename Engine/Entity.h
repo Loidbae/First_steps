@@ -2,25 +2,25 @@
 #include "Graphics.h"
 #include "Keyboard.h"
 #include "Locations.h"
-#include "Platforms.h"
 
 using namespace std;
 
 class Entity
 {
 public:
-	Entity(const Location& delta_loc)
+	Entity()
 	{
-		loc = delta_loc;
+		loc.x = 400;
+		loc.y = 300;
+		loc.width = 10;
+		loc.height = 10;
 	}
 
 	void Draw(Graphics& gfx)const;
 	void Move(Keyboard& kbd);
 	void WNDBorder();
-	void Test(Keyboard& kbd);
+	void Test(Keyboard& kbd); // see cpp file
 
 
 	Location loc;
-	static constexpr int width = 10;
-	static constexpr int height = 10;
 };

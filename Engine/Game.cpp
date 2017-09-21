@@ -25,7 +25,6 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	player({ 400,300 }),
 	rng(rd())
 	
 {
@@ -46,26 +45,26 @@ void Game::Go()
 
 
 void Game::UpdateModel()
-{
-																											//Note to myself collsion calculation always AFTER playermovement.!!!!!
+{																							//Note to myself collsion calculation always AFTER Objectmovement
 	player.Move(wnd.kbd);
 	player.Test(wnd.kbd);                                
-	player.WNDBorder();
-
 	for (int i = 0; i < dex; i++)
 	{
+		platform[i].CheckInBox(player);
 		platform[i].UpdateBoxCol(player);
 	}
-	
+	player.WNDBorder();
 	
 }
 
 void Game::ComposeFrame()
 {
 	player.Draw(gfx);
+
 	for (int i = 0; i < dex; i++)
 	{
 		platform[i].DrawBox(gfx);
+		platform[i].CheckInBoxVisualtest(gfx);
 	}
 	
 } 
