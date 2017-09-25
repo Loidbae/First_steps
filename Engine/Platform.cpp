@@ -9,18 +9,76 @@ Platform::Platform()
 {
 }
 
-void Platform::DrawBox(Graphics& gfx)
+
+void Platform::DrawBox(Graphics& gfx) const
 {
 	for (int in = 0; in < Pos.width; in++)
 	{
 		for (int i = 0; i < Pos.height; i++)
 		{
-			gfx.PutPixel(in+Pos.x, i+Pos.y,c);
+			gfx.PutPixel(in + Pos.x, i + Pos.y, c);
 		}
 	}
 }
 
-void Platform::UpdateBoxCol(Entity& player)
+void Platform::CheckSection(Entity & player)
+{
+	/*        Selfnote....kinda
+		 _______________
+	 ___|_______I_______|___
+	|   | _____________ |   |   My idea here is to surround the object with sections which are indipendent of each other,
+	|   ||             ||   |   when a section is activated, by steping in the designated area, the corresponding side-collision
+	|   ||             ||   |   gets calculated.
+	|   ||             ||   |
+	|IV ||             || II|
+	|   ||             ||   |
+	|   ||             ||   |
+	|   ||             ||   |
+	|   ||_____________||   |
+	|___|_______________|___|
+		|______III______|
+	*/
+
+	// CCP# / CollisionCheckPoint/x/y/width/height
+
+	const int CCPy = Pos.y - (Pos.height / 3);
+	const int CCPh = Pos.height / 3;
+
+	const int CCP1x = Pos.x + Pos.width;
+	const int CCP1w = Pos.width / 2;
+
+	const int CCP2y = Pos.y + Pos.height;
+	const int CCP2h = Pos.height / 2;
+
+	const int CCP3x = Pos.x - (Pos.width / 2);
+	const int CCP3w = Pos.width / 2;
+
+	// I
+	if (Col_Check(player, Pos.x, Pos.width, CCPy, CCPh))
+	{
+		CollisionCheck = true;
+	}
+
+	// II
+	if (Col_Check(player, CCP1x, CCP1w, Pos.y, Pos.height))
+	{
+		CollisionCheck1 = true;
+	}
+
+	// III
+	if (Col_Check(player, Pos.x, Pos.width, CCP2y, CCP2h))
+	{
+		CollisionCheck2 = true;
+	}
+
+	// IV
+	if (Col_Check(player, CCP3x, CCP3w, Pos.y, Pos.height))
+	{
+		CollisionCheck3 = true;
+	}
+}
+
+void Platform::UpdateBoxCol(Entity& player) const
 {
 								
 	const int BoxRight = Pos.x + Pos.width;
@@ -28,7 +86,7 @@ void Platform::UpdateBoxCol(Entity& player)
 	const int EntityRight = player.loc.x + player.loc.width;
 	const int EntityBottom = player.loc.y + player.loc.height;
 
-	//Finally the check if area is selected, then calculating collision accordingly;
+	//Finally the check if the area is active, if it is -> calculate collision accordingly;
 
 	// Top
 	if (CollisionCheck)
@@ -68,105 +126,23 @@ void Platform::UpdateBoxCol(Entity& player)
 	}
 }
 
-void Platform::CheckInBox(Entity & player)
+bool Platform::Col_Check(Entity & player, int objectX, int objectwidth, int objectY, int objectheight) const
 {
-	/*        Selfnote....kinda
-	         _______________
-	     ___|_______I_______|___
-	    |   | _____________ |   |   My idea here is to sourround the object with sections which are indipendent of each other,
-	    |   ||             ||   |   when a section is getting activated, by steping in the designated area, the corresponding side-collision
-	    |   ||             ||   |   gets calculated.
-	    |   ||             ||   |   
-		|IV ||             || II|
-		|   ||             ||   |	//Edit1: Success.
-		|   ||             ||   | 
-		|   ||             ||   |
-		|   ||_____________||   |
-		|___|_______________|___|
-	        |______III______|
-	*/
+	// basicly the check if something collides with the player
 
-	// CCP# / CollisionCheckPoint##### /x/y/width/height
-	
-	const int CCPx = Pos.x;
-	const int CCPy = Pos.y - (Pos.height / 3);
-	const int CCPw = Pos.width;
-	const int CCPh = Pos.height / 3;
-
-	const int CCP1x = Pos.x + Pos.width;
-	const int CCP1y = Pos.y;
-	const int CCP1w = Pos.width / 2;
-	const int CCP1h = Pos.height;
-
-	const int CCP2x = Pos.x;
-	const int CCP2y = Pos.y + Pos.height;
-	const int CCP2w = Pos.width;
-	const int CCP2h = Pos.height / 2;
-
-	const int CCP3x = Pos.x - (Pos.width / 2);
-	const int CCP3y = Pos.y;
-	const int CCP3w = Pos.width / 2;
-	const int CCP3h = Pos.height;
-
-	const int PointRight = CCPx + CCPw;
-	const int PointBottom = CCPy + CCPh;
 	const int EntityRight = player.loc.x + player.loc.width;
 	const int EntityBottom = player.loc.y + player.loc.height;
 
-	const int PointRight1 = CCP1x + CCP1w;
-	const int PointBottom1 = CCP1y + CCP1h;
-	const int EntityRight1 = player.loc.x + player.loc.width;
-	const int EntityBottom1 = player.loc.y + player.loc.height;
+	const int PointRight = objectX + objectwidth;
+	const int PointBottom = objectY + objectheight;
 
-	const int PointRight2 = CCP2x + CCP2w;
-	const int PointBottom2 = CCP2y + CCP2h;
-	const int EntityRight2 = player.loc.x + player.loc.width;
-	const int EntityBottom2 = player.loc.y + player.loc.height;
-
-	const int PointRight3 = CCP3x + CCP3w;
-	const int PointBottom3 = CCP3y + CCP3h;
-	const int EntityRight3 = player.loc.x + player.loc.width;
-	const int EntityBottom3 = player.loc.y + player.loc.height;
-	
-	//I
-	if (EntityRight >= CCPx &&
-	player.loc.x <= PointRight &&
-	EntityBottom >= CCPy &&
-	player.loc.y <= PointBottom)
-	{
-	CollisionCheck = true;
-	c = Colors::Red;
-	}
-
-	//II
-	if (EntityRight >= CCP1x &&
-		player.loc.x <= PointRight1 &&
-		EntityBottom >= CCP1y &&
-		player.loc.y <= PointBottom1)
-	{
-		CollisionCheck1 = true;
-	}
-
-	//III
-	if (EntityRight >= CCP2x &&
-		player.loc.x <= PointRight2 &&
-		EntityBottom >= CCP2y &&
-		player.loc.y <= PointBottom2)
-	{
-		CollisionCheck2 = true;
-	}
-
-	//IV
-	if (EntityRight >= CCP3x &&
-		player.loc.x <= PointRight3 &&
-		EntityBottom >= CCP3y &&
-		player.loc.y <= PointBottom3)
-	{
-		CollisionCheck3 = true;
-	}
+	return EntityRight >= objectX &&
+		player.loc.x <= PointRight &&
+		EntityBottom >= objectY &&
+		player.loc.y <= PointBottom;
 }
 
-void Platform::CheckInBoxVisualtest(Graphics& gfx)
+void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 {
 	if (CollisionCheck|| CollisionCheck1|| CollisionCheck2|| CollisionCheck3)
 	{
@@ -180,4 +156,9 @@ void Platform::CheckInBoxVisualtest(Graphics& gfx)
 	{
 		c = Colors::Green;
 	}
+
+	/*if (player.loc.y < Pos.y - (Pos.height / 3))
+	{
+
+	}*/
 }

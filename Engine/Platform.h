@@ -18,10 +18,11 @@ public:
 		Pos.height = DrawCordY(rng);
 	}
 
-	void DrawBox(Graphics& gfx);
-	void UpdateBoxCol(Entity& player);
-	void CheckInBox(Entity& player); // BOOOL
-	void CheckInBoxVisualtest(Graphics& gfx);
+	void DrawBox(Graphics& gfx) const ;
+	void CheckSection(Entity& player);
+	void UpdateBoxCol(Entity& player) const;
+	bool Col_Check(Entity& player, int objectX, int objectwidth, int objectY, int objectheight) const;
+	void CheckInBoxVisualtest(Graphics& gfx, Entity& player);
 
 private:
 	uniform_int_distribution<int> PosX;

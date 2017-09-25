@@ -50,7 +50,7 @@ void Game::UpdateModel()
 	player.Test(wnd.kbd);                                
 	for (int i = 0; i < dex; i++)
 	{
-		platform[i].CheckInBox(player);
+		platform[i].CheckSection(player);
 		platform[i].UpdateBoxCol(player);
 	}
 	player.WNDBorder();
@@ -64,7 +64,7 @@ void Game::ComposeFrame()
 	for (int i = 0; i < dex; i++)
 	{
 		platform[i].DrawBox(gfx);
-		platform[i].CheckInBoxVisualtest(gfx);
+		platform[i].CheckInBoxVisualtest(gfx,player);
 	}
 	
 } 
