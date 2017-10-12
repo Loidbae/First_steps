@@ -21,6 +21,4 @@ public:
 	int y;
 	int width;
 	int height;
-
-	
 };

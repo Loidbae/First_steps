@@ -7,8 +7,8 @@ Platform::Platform()
 	DrawCordX(22, 50),
 	DrawCordY(50, 60)
 {
-}
 
+}
 
 void Platform::DrawBox(Graphics& gfx) const
 {
@@ -16,15 +16,15 @@ void Platform::DrawBox(Graphics& gfx) const
 	{
 		for (int i = 0; i < Pos.height; i++)
 		{
-			gfx.PutPixel(in + Pos.x, i + Pos.y, c);
+			gfx.PutPixel(in + Pos.x, i + Pos.y, Colors::White);
 		}
 	}
 }
 
 void Platform::CheckSection(Entity & player)
 {
-	/*        Selfnote....kinda
-		 _______________
+	/*
+	     _______________
 	 ___|_______I_______|___
 	|   | _____________ |   |   My idea here is to surround the object with sections which are indipendent of each other,
 	|   ||             ||   |   when a section is activated, by steping in the designated area, the corresponding side-collision
@@ -58,11 +58,19 @@ void Platform::CheckSection(Entity & player)
 	{
 		CollisionCheck = true;
 	}
+	else
+	{
+		CollisionCheck = false;
+	}
 
 	// II
 	if (Col_Check(player, CCP1x, CCP1w, Pos.y, Pos.height))
 	{
 		CollisionCheck1 = true;
+	}
+	else
+	{
+		CollisionCheck1 = false;
 	}
 
 	// III
@@ -70,11 +78,19 @@ void Platform::CheckSection(Entity & player)
 	{
 		CollisionCheck2 = true;
 	}
+	else
+	{
+		CollisionCheck2 = false;
+	}
 
 	// IV
 	if (Col_Check(player, CCP3x, CCP3w, Pos.y, Pos.height))
 	{
 		CollisionCheck3 = true;
+	}
+	else
+	{
+		CollisionCheck3 = false;
 	}
 }
 
@@ -128,7 +144,7 @@ void Platform::UpdateBoxCol(Entity& player) const
 
 bool Platform::Col_Check(Entity & player, int objectX, int objectwidth, int objectY, int objectheight) const
 {
-	// basicly the check if something collides with the player
+	// basicly checking if something collides with the player
 
 	const int EntityRight = player.loc.x + player.loc.width;
 	const int EntityBottom = player.loc.y + player.loc.height;
@@ -144,21 +160,105 @@ bool Platform::Col_Check(Entity & player, int objectX, int objectwidth, int obje
 
 void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 {
-	if (CollisionCheck|| CollisionCheck1|| CollisionCheck2|| CollisionCheck3)
-	{
-		c = Colors::Red;
-		CollisionCheck = false;
-		CollisionCheck1 = false;
-		CollisionCheck2 = false;
-		CollisionCheck3 = false;
-	}
-	else
+	if (CollisionCheck || CollisionCheck1 || CollisionCheck2 || CollisionCheck3)
 	{
 		c = Colors::Green;
 	}
-
-	/*if (player.loc.y < Pos.y - (Pos.height / 3))
+	else
 	{
+		c = Colors::Red;
+	}
 
-	}*/
+	const int InBoxY = Pos.y - (Pos.height / 3);
+	const int InBoxRight = Pos.x + Pos.width;
+	const int InBoxBottom = Pos.y + Pos.height;
+
+	const int EntityBottom = player.loc.y + player.loc.height;
+
+		if (player.loc.y < Pos.y)
+		{
+			
+			for (int i = 0; i <= Pos.width; i++)
+			{
+				gfx.PutPixel(i + Pos.x, 0 + Pos.y, c);
+				gfx.PutPixel(i + Pos.x, 0 + InBoxY, c);
+
+			}
+
+			
+			for (int i = 0; i < Pos.height / 3; i++)
+			{
+				gfx.PutPixel(0 + Pos.x, i + InBoxY, c);
+				gfx.PutPixel(0 + InBoxRight, i + InBoxY, c);
+			}	
+		}
+	
+		
+		if (EntityBottom >= Pos.y && player.loc.y <= InBoxBottom && player.loc.x <= Pos.x)
+		{
+			
+			for (int i = 0; i < Pos.width / 2; i++)
+			{
+				gfx.PutPixel(i + Pos.x - (Pos.width / 2), 0 + Pos.y, c);
+				gfx.PutPixel(i + Pos.x - (Pos.width / 2), 0 + InBoxBottom, c);
+
+			}
+			 
+			for (int i = 0; i < Pos.height; i++)
+			{
+				gfx.PutPixel(0 + Pos.x - (Pos.width / 2), i + Pos.y, c);
+				gfx.PutPixel(0 + Pos.x, i + Pos.y, c);
+
+			}
+		}
+
+
+		if (EntityBottom >= Pos.y && player.loc.y <= InBoxBottom && player.loc.x >= InBoxRight)
+		{
+			
+			for (int i = 0; i < Pos.width / 2; i++)
+			{
+				gfx.PutPixel(i + InBoxRight, 0 + Pos.y, c);
+				gfx.PutPixel(i + InBoxRight, 0 + Pos.y+Pos.height, c);
+			}
+			
+			for (int i = 0; i < Pos.height; i++)
+			{
+				gfx.PutPixel(0 + InBoxRight, i + Pos.y, c);
+				gfx.PutPixel(0 + InBoxRight+(Pos.width/2), i+ Pos.y, c);
+			}
+		}
+		
+		if (player.loc.y >= Pos.y+Pos.height)
+		{
+			
+			for (int i = 0; i < Pos.width; i++)
+			{
+				gfx.PutPixel(i + Pos.x, 0 + InBoxBottom, c);
+				gfx.PutPixel(i + Pos.x, 0 + InBoxBottom+(Pos.height/2), c);
+			}
+			
+			for (int i = 0; i < Pos.height/2; i++)
+			{
+				gfx.PutPixel(0 + Pos.x, i + InBoxBottom, c);
+				gfx.PutPixel(0 + InBoxRight, i + InBoxBottom, c);
+			}
+		}
+}
+
+bool Platform::GetCollisionCheck()
+{
+	return CollisionCheck;
+}
+bool Platform::GetCollisionCheck1()
+{
+	return CollisionCheck1;
+}
+bool Platform::GetCollisionCheck2()
+{
+	return CollisionCheck2;
+}
+bool Platform::GetCollisionCheck3()
+{
+	return CollisionCheck3;
 }

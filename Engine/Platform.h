@@ -23,6 +23,13 @@ public:
 	void UpdateBoxCol(Entity& player) const;
 	bool Col_Check(Entity& player, int objectX, int objectwidth, int objectY, int objectheight) const;
 	void CheckInBoxVisualtest(Graphics& gfx, Entity& player);
+	bool GetCollisionCheck();
+	bool GetCollisionCheck1();
+	bool GetCollisionCheck2();
+	bool GetCollisionCheck3();
+
+	Location Pos;
+	Color c = Colors::Green;
 
 private:
 	uniform_int_distribution<int> PosX;
@@ -30,13 +37,13 @@ private:
 	uniform_int_distribution<int> DrawCordX;
 	uniform_int_distribution<int> DrawCordY;
 
-	bool CollisionCheck = false;
-	bool CollisionCheck1 = false;
-	bool CollisionCheck2 = false;
-	bool CollisionCheck3 = false;
+	bool CollisionCheck;
+	bool CollisionCheck1;
+	bool CollisionCheck2;
+	bool CollisionCheck3;
 
-	Color c= Colors::Green;
-	Location Pos;
+	
+	
 	
 
 };

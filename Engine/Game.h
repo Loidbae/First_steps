@@ -51,7 +51,6 @@ private:
 	Entity player;
 
 
-
 	// Array for the platforms / still testing stuff
 	static constexpr int dex = 10;
 	Platform platform[dex];
