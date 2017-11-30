@@ -2,8 +2,7 @@
 #include "Graphics.h"
 #include "Keyboard.h"
 #include "Locations.h"
-
-using namespace std;
+#include <chrono>
 
 class Entity
 {

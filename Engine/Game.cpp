@@ -36,6 +36,7 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
+	//std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 	gfx.BeginFrame();	
 	UpdateModel();
 	ComposeFrame();

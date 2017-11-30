@@ -4,7 +4,6 @@
 #include "Entity.h"
 #include <random>
 
-using namespace std;
 class Platform
 {
 public:
@@ -23,10 +22,6 @@ public:
 	void UpdateBoxCol(Entity& player) const;
 	bool Col_Check(Entity& player, int objectX, int objectwidth, int objectY, int objectheight) const;
 	void CheckInBoxVisualtest(Graphics& gfx, Entity& player);
-	bool GetCollisionCheck();
-	bool GetCollisionCheck1();
-	bool GetCollisionCheck2();
-	bool GetCollisionCheck3();
 
 	Location Pos;
 	Color c = Colors::Green;
@@ -41,9 +36,5 @@ private:
 	bool CollisionCheck1;
 	bool CollisionCheck2;
 	bool CollisionCheck3;
-
-	
-	
-	
 
 };

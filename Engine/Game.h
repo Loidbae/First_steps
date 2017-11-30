@@ -27,7 +27,6 @@
 #include "Platform.h"
 #include <random>
 
-using namespace std;
 
 class Game
 {

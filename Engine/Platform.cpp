@@ -26,9 +26,9 @@ void Platform::CheckSection(Entity & player)
 	/*
 	     _______________
 	 ___|_______I_______|___
-	|   | _____________ |   |   My idea here is to surround the object with sections which are indipendent of each other,
-	|   ||             ||   |   when a section is activated, by steping in the designated area, the corresponding side-collision
-	|   ||             ||   |   gets calculated.
+	|   | _____________ |   |   My idea here is to surround the object with sections, which are indipendent,
+	|   ||             ||   |   when a section is activated, by steping in the designated area,
+	|   ||             ||   |   the corresponding side-collision gets calculated.
 	|   ||             ||   |
 	|IV ||             || II|
 	|   ||             ||   |
@@ -102,7 +102,7 @@ void Platform::UpdateBoxCol(Entity& player) const
 	const int EntityRight = player.loc.x + player.loc.width;
 	const int EntityBottom = player.loc.y + player.loc.height;
 
-	//Finally the check if the area is active, if it is -> calculate collision accordingly;
+	//Finally checking if the area is active, if it is -> calculate collision accordingly;
 
 	// Top
 	if (CollisionCheck)
@@ -169,15 +169,18 @@ void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 		c = Colors::Red;
 	}
 
+	// Drawing visuals to check if the collision areas are on the right place 
+
 	const int InBoxY = Pos.y - (Pos.height / 3);
 	const int InBoxRight = Pos.x + Pos.width;
 	const int InBoxBottom = Pos.y + Pos.height;
 
 	const int EntityBottom = player.loc.y + player.loc.height;
 
+
 		if (player.loc.y < Pos.y)
 		{
-			
+
 			for (int i = 0; i <= Pos.width; i++)
 			{
 				gfx.PutPixel(i + Pos.x, 0 + Pos.y, c);
@@ -185,25 +188,25 @@ void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 
 			}
 
-			
+
 			for (int i = 0; i < Pos.height / 3; i++)
 			{
 				gfx.PutPixel(0 + Pos.x, i + InBoxY, c);
 				gfx.PutPixel(0 + InBoxRight, i + InBoxY, c);
-			}	
+			}
 		}
-	
-		
+
+
 		if (EntityBottom >= Pos.y && player.loc.y <= InBoxBottom && player.loc.x <= Pos.x)
 		{
-			
+
 			for (int i = 0; i < Pos.width / 2; i++)
 			{
 				gfx.PutPixel(i + Pos.x - (Pos.width / 2), 0 + Pos.y, c);
 				gfx.PutPixel(i + Pos.x - (Pos.width / 2), 0 + InBoxBottom, c);
 
 			}
-			 
+
 			for (int i = 0; i < Pos.height; i++)
 			{
 				gfx.PutPixel(0 + Pos.x - (Pos.width / 2), i + Pos.y, c);
@@ -215,50 +218,34 @@ void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 
 		if (EntityBottom >= Pos.y && player.loc.y <= InBoxBottom && player.loc.x >= InBoxRight)
 		{
-			
+
 			for (int i = 0; i < Pos.width / 2; i++)
 			{
 				gfx.PutPixel(i + InBoxRight, 0 + Pos.y, c);
-				gfx.PutPixel(i + InBoxRight, 0 + Pos.y+Pos.height, c);
+				gfx.PutPixel(i + InBoxRight, 0 + Pos.y + Pos.height, c);
 			}
-			
+
 			for (int i = 0; i < Pos.height; i++)
 			{
 				gfx.PutPixel(0 + InBoxRight, i + Pos.y, c);
-				gfx.PutPixel(0 + InBoxRight+(Pos.width/2), i+ Pos.y, c);
+				gfx.PutPixel(0 + InBoxRight + (Pos.width / 2), i + Pos.y, c);
 			}
 		}
-		
-		if (player.loc.y >= Pos.y+Pos.height)
+
+		if (player.loc.y >= Pos.y + Pos.height)
 		{
-			
+
 			for (int i = 0; i < Pos.width; i++)
 			{
 				gfx.PutPixel(i + Pos.x, 0 + InBoxBottom, c);
-				gfx.PutPixel(i + Pos.x, 0 + InBoxBottom+(Pos.height/2), c);
+				gfx.PutPixel(i + Pos.x, 0 + InBoxBottom + (Pos.height / 2), c);
 			}
-			
-			for (int i = 0; i < Pos.height/2; i++)
+
+			for (int i = 0; i < Pos.height / 2; i++)
 			{
 				gfx.PutPixel(0 + Pos.x, i + InBoxBottom, c);
 				gfx.PutPixel(0 + InBoxRight, i + InBoxBottom, c);
 			}
 		}
-}
-
-bool Platform::GetCollisionCheck()
-{
-	return CollisionCheck;
-}
-bool Platform::GetCollisionCheck1()
-{
-	return CollisionCheck1;
-}
-bool Platform::GetCollisionCheck2()
-{
-	return CollisionCheck2;
-}
-bool Platform::GetCollisionCheck3()
-{
-	return CollisionCheck3;
+	
 }
