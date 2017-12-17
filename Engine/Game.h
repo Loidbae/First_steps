@@ -26,6 +26,7 @@
 #include "Entity.h"
 #include "Platform.h"
 #include <random>
+#include "FrameTimer.h"
 
 
 class Game
@@ -48,6 +49,7 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 	Entity player;
+	FrameTimer FT;
 
 
 	// Array for the platforms / still testing stuff

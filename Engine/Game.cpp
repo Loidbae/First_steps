@@ -47,6 +47,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {	//Note to myself collsion calculation always AFTER Objectmovement
+	const float dt = FT.Mark();
+
 	player.Move(wnd.kbd);
 	player.Test(wnd.kbd);
 	for (int i = 0; i < dex; i++)
