@@ -20,17 +20,17 @@ public:
 	void DrawBox(Graphics& gfx) const ;
 	void CheckSection(Entity& player);
 	void UpdateBoxCol(Entity& player) const;
-	bool Col_Check(Entity& player, int objectX, int objectwidth, int objectY, int objectheight) const;
+	bool Col_Check(Entity& player, float objectX, float objectwidth, float objectY, float objectheight) const;
 	void CheckInBoxVisualtest(Graphics& gfx, Entity& player);
 
 	Location Pos;
 	Color c = Colors::Green;
 
 private:
-	uniform_int_distribution<int> PosX;
-	uniform_int_distribution<int> PosY;
-	uniform_int_distribution<int> DrawCordX;
-	uniform_int_distribution<int> DrawCordY;
+	uniform_real_distribution<float> PosX;
+	uniform_real_distribution<float> PosY;
+	uniform_real_distribution<float> DrawCordX;
+	uniform_real_distribution<float> DrawCordY;
 
 	bool CollisionCheck;
 	bool CollisionCheck1;

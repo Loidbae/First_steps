@@ -36,7 +36,6 @@ Game::Game(MainWindow& wnd)
 
 void Game::Go()
 {
-	//std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 	gfx.BeginFrame();	
 	UpdateModel();
 	ComposeFrame();
@@ -46,11 +45,11 @@ void Game::Go()
 
 
 void Game::UpdateModel()
-{	//Note to myself collsion calculation always AFTER Objectmovement
+{	//Note to myself, collsion calculation always AFTER Objectmovement.
 	const float dt = FT.Mark();
 
 	player.Move(wnd.kbd);
-	player.Test(wnd.kbd);
+
 	for (int i = 0; i < dex; i++)
 	{
 		platform[i].CheckSection(player);
@@ -67,7 +66,10 @@ void Game::ComposeFrame()
 	for (int i = 0; i < dex; i++)
 	{
 		platform[i].DrawBox(gfx);
-		platform[i].CheckInBoxVisualtest(gfx,player);
+		platform[i].CheckInBoxVisualtest(gfx, player);
+		
+	
+		
 	}
 	
 } 

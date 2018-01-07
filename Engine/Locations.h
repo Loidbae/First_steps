@@ -17,8 +17,9 @@ public:
 	}
 
 
-	int x;
-	int y;
-	int width;
-	int height;
+	float x;
+	float y;
+	float sp;
+	float width;
+	float height;
 };

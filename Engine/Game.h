@@ -51,7 +51,6 @@ private:
 	Entity player;
 	FrameTimer FT;
 
-
 	// Array for the platforms / still testing stuff
 	static constexpr int dex = 10;
 	Platform platform[dex];
