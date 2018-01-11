@@ -21,55 +21,52 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game(MainWindow& wnd)
+Game::Game(MainWindow& Wnd)
 	:
-	wnd(wnd),
-	gfx(wnd),
-	rng(rd())
+	_Wnd(Wnd),
+	_Gfx(Wnd),
+	_Rng(_Rd())
 	
 {
-	for (int i = 0; i < dex; i++)
+	for (int i = 0; i < Dex; i++)
 	{
-		platform[i].InitBoxes(rng);
+		_Platform[i].InitBoxes(_Rng);
 	}
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	_Gfx.BeginFrame();	
 	UpdateModel();
 	ComposeFrame();
-	gfx.EndFrame();
+	_Gfx.EndFrame();
 }
 
 
 
 void Game::UpdateModel()
 {	//Note to myself, collsion calculation always AFTER Objectmovement.
-	const float dt = FT.Mark();
+	const float Dt = _Ft.Mark();
 
-	player.Move(wnd.kbd);
+	_Character.move(_Wnd.kbd);
 
-	for (int i = 0; i < dex; i++)
+	for (int i = 0; i < Dex; i++)
 	{
-		platform[i].CheckSection(player);
-		platform[i].UpdateBoxCol(player);
+		_Platform[i].checksection(_Character);
+		_Platform[i].updateboxcol(_Character);
 	}
-	player.WNDBorder();
+	_Character.wndborder();
 	
 }
 
 void Game::ComposeFrame()
 {
-	player.Draw(gfx);
+	_Character.draw(_Gfx);
 
-	for (int i = 0; i < dex; i++)
+	for (int i = 0; i < Dex; i++)
 	{
-		platform[i].DrawBox(gfx);
-		platform[i].CheckInBoxVisualtest(gfx, player);
-		
-	
-		
+		_Platform[i].drawbox(_Gfx);
+		_Platform[i].checkinboxvisualtest(_Gfx, _Character);
 	}
 	
 } 

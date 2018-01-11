@@ -2,26 +2,26 @@
 
 Platform::Platform()
 	:
-	PosX(50, 659),
-	PosY(50, 459),
-	DrawCordX(22, 50),
-	DrawCordY(50, 60)
+	_PosX(50, 659),
+	_PosY(50, 459),
+	_DrawCordX(22, 50),
+	_DrawCordY(50, 60)
 {
 
 }
 
-void Platform::DrawBox(Graphics& gfx) const
+void Platform::drawbox(Graphics& Gfx) const
 {
-	for (int in = 0; in < (int)Pos.width; in++)
+	for (int In = 0; In < (int)_Pos.Width; In++)
 	{
-		for (int i = 0; i < (int)Pos.height; i++)
+		for (int I = 0; I < (int)_Pos.Height; I++)
 		{
-			gfx.PutPixel(in + (int)Pos.x, i + (int)Pos.y, Colors::White);
+			Gfx.PutPixel(In + (int)_Pos.X, I + (int)_Pos.Y, Colors::White);
 		}
 	}
 }
 
-void Platform::CheckSection(Entity & player)
+void Platform::checksection(Player& Player)
 {
 	/*
 	     _______________
@@ -41,20 +41,20 @@ void Platform::CheckSection(Entity & player)
 
 	// CCP# / CollisionCheckPoint/x/y/width/height
 
-	const float CCPy = Pos.y - (Pos.height / 3);
-	const float CCPh = Pos.height / 3;
+	const float CCPy = _Pos.Y - (_Pos.Height / 3);
+	const float CCPh = _Pos.Height / 3;
 
-	const float CCP1x = Pos.x + Pos.width;
-	const float CCP1w = Pos.width / 2;
+	const float CCP1x = _Pos.X + _Pos.Width;
+	const float CCP1w = _Pos.Width / 2;
 
-	const float CCP2y = Pos.y + Pos.height;
-	const float CCP2h = Pos.height / 2;
+	const float CCP2y = _Pos.Y + _Pos.Height;
+	const float CCP2h = _Pos.Height / 2;
 
-	const float CCP3x = Pos.x - (Pos.width / 2);
-	const float CCP3w = Pos.width / 2;
+	const float CCP3x = _Pos.X - (_Pos.Width / 2);
+	const float CCP3w = _Pos.Width / 2;
 
 	// I
-	if (Col_Check(player, Pos.x, Pos.width, CCPy, CCPh))
+	if (calc_collision(Player, _Pos.X, _Pos.Width, CCPy, CCPh))
 	{
 		CollisionCheck = true;
 	}
@@ -64,7 +64,7 @@ void Platform::CheckSection(Entity & player)
 	}
 
 	// II
-	if (Col_Check(player, CCP1x, CCP1w, Pos.y, Pos.height))
+	if (calc_collision(Player, CCP1x, CCP1w, _Pos.Y, _Pos.Height))
 	{
 		CollisionCheck1 = true;
 	}
@@ -74,7 +74,7 @@ void Platform::CheckSection(Entity & player)
 	}
 
 	// III
-	if (Col_Check(player, Pos.x, Pos.width, CCP2y, CCP2h))
+	if (calc_collision(Player, _Pos.X, _Pos.Width, CCP2y, CCP2h))
 	{
 		CollisionCheck2 = true;
 	}
@@ -84,7 +84,7 @@ void Platform::CheckSection(Entity & player)
 	}
 
 	// IV
-	if (Col_Check(player, CCP3x, CCP3w, Pos.y, Pos.height))
+	if (calc_collision(Player, CCP3x, CCP3w, _Pos.Y, _Pos.Height))
 	{
 		CollisionCheck3 = true;
 	}
@@ -94,31 +94,32 @@ void Platform::CheckSection(Entity & player)
 	}
 }
 
-void Platform::UpdateBoxCol(Entity& player) const
+void Platform::updateboxcol(Player& Player) const
 {
-								
-	const float BoxRight = Pos.x + Pos.width;
-	const float BoxBottom = Pos.y + Pos.height;
-	const float EntityRight = player.loc.x + player.loc.width;
-	const float EntityBottom = player.loc.y + player.loc.height;
+
+	const float BoxRight = _Pos.X + _Pos.Width;
+	const float BoxBottom = _Pos.Y + _Pos.Height;
+	const float EntityRight = Player._Coord.X + Player._Coord.Width;
+	const float EntityBottom = Player._Coord.Y + Player._Coord.Height;
 
 	//Finally checking if the area is active, if it is -> calculate collision accordingly;
 
 	// Top
 	if (CollisionCheck)
 	{
-		if (EntityBottom > Pos.y && player.loc.x <= BoxRight && EntityRight >= Pos.x)
+		if (EntityBottom > _Pos.Y && Player._Coord.X <= BoxRight && EntityRight >= _Pos.X - 1)
 		{
-			player.loc.y = (Pos.y - 0.5f) - player.loc.height;
+			Player._Coord.Y = (_Pos.Y - 1) - Player._Coord.Height - 1;
+
 		}
 	}
 
 	// Right Side
 	if (CollisionCheck1)
 	{
-		if (player.loc.x <= BoxRight && player.loc.y >= Pos.y && player.loc.y <= BoxBottom)
+		if (Player._Coord.X <= BoxRight && Player._Coord.Y >= _Pos.Y && Player._Coord.Y <= BoxBottom)
 		{
-			player.loc.x = BoxRight + 1;
+			Player._Coord.X = BoxRight + 1;
 		}
 
 	}
@@ -126,9 +127,9 @@ void Platform::UpdateBoxCol(Entity& player) const
 	// Left Side
 	if (CollisionCheck3)
 	{
-		if (EntityRight >= Pos.x && player.loc.y <= BoxBottom && EntityRight >= Pos.y)
+		if (EntityRight > _Pos.X && Player._Coord.Y <= BoxBottom && EntityRight >= _Pos.Y)
 		{
-			player.loc.x = (Pos.x - 1) - player.loc.width;
+			Player._Coord.X = (_Pos.X - 1) - Player._Coord.Width;
 		}
 	}
 
@@ -137,30 +138,29 @@ void Platform::UpdateBoxCol(Entity& player) const
 	//Bottom
 	if (CollisionCheck2)
 	{
-		if (player.loc.y <= BoxBottom && player.loc.x <= BoxRight && EntityRight >= Pos.x)
+		if (Player._Coord.Y <= BoxBottom && Player._Coord.X <= BoxRight && EntityRight >= _Pos.X)
 		{
-			player.loc.y = BoxBottom + 1;
+			Player._Coord.Y = BoxBottom + 1;
 		}
 	}
 }
 
-bool Platform::Col_Check(Entity & player, float objectX, float objectwidth, float objectY, float objectheight) const
+bool Platform::calc_collision(Player& Player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const
 {
-	// basicly checking if something collides with the player
 
-	const float EntityRight = player.loc.x + player.loc.width;
-	const float EntityBottom = player.loc.y + player.loc.height;
+	const float EntityRight = Player._Coord.X + Player._Coord.Width;
+	const float EntityBottom = Player._Coord.Y + Player._Coord.Height;
 
-	const float PointRight = objectX + objectwidth;
-	const float PointBottom = objectY + objectheight;
+	const float PointRight = ObjectX + Objectwidth;
+	const float PointBottom = ObjectY + Objectheight;
 
-	return EntityRight >= objectX &&
-		player.loc.x <= PointRight &&
-		EntityBottom >= objectY &&
-		player.loc.y <= PointBottom;
+	return EntityRight >= ObjectX &&
+		Player._Coord.X <= PointRight &&
+		EntityBottom >= ObjectY &&
+		Player._Coord.Y <= PointBottom;
 }
 
-void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
+void Platform::checkinboxvisualtest(Graphics& Gfx, Player& Player)
 {
 	if (CollisionCheck || CollisionCheck1 || CollisionCheck2 || CollisionCheck3)
 	{
@@ -172,88 +172,88 @@ void Platform::CheckInBoxVisualtest(Graphics& gfx, Entity& player)
 	}
 
 	// Drawing visuals to check if the collision areas are on the right place 
-	const int int_PosX = (int)Pos.x;
-	const int int_PosY = (int)Pos.y;
-	const int int_PosW = (int)Pos.width;
-	const int int_PosH = (int)Pos.height;
+	const int Int_PosX = (int)_Pos.X;
+	const int Int_PosY = (int)_Pos.Y;
+	const int Int_PosW = (int)_Pos.Width;
+	const int Int_PosH = (int)_Pos.Height;
 
-	const int InBoxY = int_PosY - (int_PosH / 3);
-	const int InBoxRight = int_PosX + int_PosW;
-	const int InBoxBottom = int_PosY + int_PosH;
+	const int InBoxY = Int_PosY - (Int_PosH / 3);
+	const int InBoxRight = Int_PosX + Int_PosW;
+	const int InBoxBottom = Int_PosY + Int_PosH;
 
-	const float EntityBottom = player.loc.y + player.loc.height;
-
-
+	const float EntityBottom = Player._Coord.Y + Player._Coord.Height;
 
 
-		if (player.loc.y <= int_PosY)
+
+
+		if (Player._Coord.Y <= Int_PosY)
 		{
 			
 
-			for (int i = 0; i <= int_PosW; i++)
+			for (int I = 0; I <= Int_PosW; I++)
 			{
-				gfx.PutPixel(i + int_PosX, 0 + int_PosY, c);
-				gfx.PutPixel(i + int_PosX, 0 + InBoxY, c);
+				Gfx.PutPixel(I + Int_PosX, 0 + Int_PosY, c);
+				Gfx.PutPixel(I + Int_PosX, 0 + InBoxY, c);
 
 			}
 
 
-			for (int i = 0; i < int_PosH / 3; i++)
+			for (int I = 0; I < Int_PosH / 3; I++)
 			{
-				gfx.PutPixel(0 + int_PosX, i + InBoxY, c);
-				gfx.PutPixel(0 + InBoxRight, i + InBoxY, c);
-			}
-		}
-
-
-		if (EntityBottom >= int_PosY && player.loc.y <= InBoxBottom && player.loc.x <= int_PosX)
-		{
-
-			for (int i = 0; i < int_PosW / 2; i++)
-			{
-				gfx.PutPixel(i + int_PosX - (int_PosW / 2), 0 + int_PosY, c);
-				gfx.PutPixel(i + int_PosX - (int_PosW / 2), 0 + InBoxBottom, c);
-
-			}
-
-			for (int i = 0; i < int_PosH; i++)
-			{
-				gfx.PutPixel(0 + int_PosX - (int_PosW / 2), i + int_PosY, c);
-				gfx.PutPixel(0 + int_PosX, i + int_PosY, c);
-
+				Gfx.PutPixel(0 + Int_PosX, I + InBoxY, c);
+				Gfx.PutPixel(0 + InBoxRight, I + InBoxY, c);
 			}
 		}
 
 
-		if (EntityBottom >= int_PosY && player.loc.y <= InBoxBottom && player.loc.x >= InBoxRight)
+		if (EntityBottom >= Int_PosY && Player._Coord.Y <= InBoxBottom && Player._Coord.X <= Int_PosX)
 		{
 
-			for (int i = 0; i < int_PosW / 2; i++)
+			for (int I = 0; I < Int_PosW / 2; I++)
 			{
-				gfx.PutPixel(i + InBoxRight, 0 + int_PosY, c);
-				gfx.PutPixel(i + InBoxRight, 0 + int_PosY + int_PosH, c);
+				Gfx.PutPixel(I + Int_PosX - (Int_PosW / 2), 0 + Int_PosY, c);
+				Gfx.PutPixel(I + Int_PosX - (Int_PosW / 2), 0 + InBoxBottom, c);
+
 			}
 
-			for (int i = 0; i < int_PosH; i++)
+			for (int I = 0; I < Int_PosH; I++)
 			{
-				gfx.PutPixel(0 + InBoxRight,i + int_PosY, c);
-				gfx.PutPixel(0 + InBoxRight + (int_PosW / 2), i + int_PosY, c);
+				Gfx.PutPixel(0 + Int_PosX - (Int_PosW / 2), I + Int_PosY, c);
+				Gfx.PutPixel(0 + Int_PosX, I + Int_PosY, c);
+
 			}
 		}
 
-		if (player.loc.y >= int_PosY + int_PosH)
+
+		if (EntityBottom >= Int_PosY && Player._Coord.Y <= InBoxBottom && Player._Coord.X >= InBoxRight)
 		{
 
-			for (int i = 0; i < int_PosW; i++)
+			for (int I = 0; I < Int_PosW / 2; I++)
 			{
-				gfx.PutPixel(i + int_PosX, 0 + InBoxBottom, c);
-				gfx.PutPixel(i + int_PosX, 0 + InBoxBottom + (int_PosH / 2), c);
+				Gfx.PutPixel(I + InBoxRight, 0 + Int_PosY, c);
+				Gfx.PutPixel(I + InBoxRight, 0 + Int_PosY + Int_PosH, c);
 			}
 
-			for (int i = 0; i < int_PosH / 2; i++)
+			for (int I = 0; I < Int_PosH; I++)
 			{
-				gfx.PutPixel(0 + int_PosX, i + InBoxBottom, c);
-				gfx.PutPixel(0 + InBoxRight, i + InBoxBottom, c);
+				Gfx.PutPixel(0 + InBoxRight, I + Int_PosY, c);
+				Gfx.PutPixel(0 + InBoxRight + (Int_PosW / 2), I + Int_PosY, c);
+			}
+		}
+
+		if (Player._Coord.Y >= Int_PosY + Int_PosH)
+		{
+
+			for (int I = 0; I < Int_PosW; I++)
+			{
+				Gfx.PutPixel(I + Int_PosX, 0 + InBoxBottom, c);
+				Gfx.PutPixel(I + Int_PosX, 0 + InBoxBottom + (Int_PosH / 2), c);
+			}
+
+			for (int I = 0; I < Int_PosH / 2; I++)
+			{
+				Gfx.PutPixel(0 + Int_PosX, I + InBoxBottom, c);
+				Gfx.PutPixel(0 + InBoxRight, I + InBoxBottom, c);
 			}
 		}
 	

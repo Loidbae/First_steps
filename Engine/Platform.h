@@ -1,7 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Locations.h"
-#include "Entity.h"
+#include "Player.h"
 #include <random>
 
 class Platform
@@ -9,28 +9,28 @@ class Platform
 public:
 	Platform();
 		
-	void InitBoxes(mt19937& rng)
+	void InitBoxes(mt19937& Rng)
 	{
-		Pos.x = PosX(rng);
-		Pos.y = PosY(rng);
-		Pos.width = DrawCordX(rng);
-		Pos.height = DrawCordY(rng);
+		_Pos.X = _PosX(Rng);
+		_Pos.Y = _PosY(Rng);
+		_Pos.Width = _DrawCordX(Rng);
+		_Pos.Height = _DrawCordY(Rng);
 	}
 
-	void DrawBox(Graphics& gfx) const ;
-	void CheckSection(Entity& player);
-	void UpdateBoxCol(Entity& player) const;
-	bool Col_Check(Entity& player, float objectX, float objectwidth, float objectY, float objectheight) const;
-	void CheckInBoxVisualtest(Graphics& gfx, Entity& player);
+	void drawbox(Graphics& Gfx) const ;
+	void checksection(Player& Player);
+	void updateboxcol(Player& Player) const;
+	bool calc_collision(Player& Player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const;
+	void checkinboxvisualtest(Graphics& Gfx, Player& Player);
 
-	Location Pos;
+	Coordinates _Pos;
 	Color c = Colors::Green;
 
 private:
-	uniform_real_distribution<float> PosX;
-	uniform_real_distribution<float> PosY;
-	uniform_real_distribution<float> DrawCordX;
-	uniform_real_distribution<float> DrawCordY;
+	uniform_real_distribution<float> _PosX;
+	uniform_real_distribution<float> _PosY;
+	uniform_real_distribution<float> _DrawCordX;
+	uniform_real_distribution<float> _DrawCordY;
 
 	bool CollisionCheck;
 	bool CollisionCheck1;

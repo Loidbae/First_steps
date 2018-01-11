@@ -2,24 +2,24 @@
 
 using namespace std;
 
-class Location
+class Coordinates
 {
 public:
 	
-	bool operator<(const Location& OoL)
+	bool operator<(const Coordinates& OoL)
 	{
-		return x < OoL.x && y < OoL.y;
+		return X < OoL.X && Y < OoL.Y;
 	}
 
-	bool operator>(const Location& OoL) // OoL -> Operation on Location
+	bool operator>(const Coordinates& OoL) // OoL -> Operation on Location
 	{
-		return x > OoL.x && y > OoL.y;
+		return X > OoL.X && Y > OoL.Y;
 	}
 
 
-	float x;
-	float y;
-	float sp;
-	float width;
-	float height;
+	float X;
+	float Y;
+	float Sp;
+	float Width;
+	float Height;
 };

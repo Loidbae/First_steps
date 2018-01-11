@@ -23,7 +23,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Entity.h"
+#include "Player.h"
 #include "Platform.h"
 #include <random>
 #include "FrameTimer.h"
@@ -44,16 +44,16 @@ private:
 	void ComposeFrame();
 	void UpdateModel();
 private:
-	MainWindow& wnd;
-	Graphics gfx;
-	std::random_device rd;
-	std::mt19937 rng;
-	Entity player;
-	FrameTimer FT;
+	MainWindow& _Wnd;
+	Graphics _Gfx;
+	std::random_device _Rd;
+	std::mt19937 _Rng;
+	Player _Character;
+	FrameTimer _Ft;
 
 	// Array for the platforms / still testing stuff
-	static constexpr int dex = 10;
-	Platform platform[dex];
+	static constexpr int Dex = 10;
+	Platform _Platform[Dex];
 
 
 	

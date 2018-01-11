@@ -1,34 +1,61 @@
 #include "Player.h"
 
-void Entity::Draw(Graphics & gfx) 
+void Player::draw(Graphics& GfX) const
 {
+	// simple rec draw function
 
-	for (int in = 0; in < width; in++)
+	for (int I = 0; I < (int)_Coord.Height; I++)
 	{
-		for (int i = 0; i < height; i++)
+		for (int In = 0; In < (int)_Coord.Width; In++)
 		{
-			gfx.PutPixel(in+x,i+y,255,255,255);
+			GfX.PutPixel(I+(int)_Coord.X,In+(int)_Coord.Y,255,255,255);
 		}
 	}
 }
 
-void Entity::Move(Keyboard & kbd)
+void Player::move(Keyboard & Kbd)
 {
-	if (kbd.KeyIsPressed('W'))
-	{
 
+	if (Kbd.KeyIsPressed('A'))
+	{
+		_Coord.X-= _Coord.Sp;
 	}
-	if (kbd.KeyIsPressed('A'))
+	
+	if (Kbd.KeyIsPressed('D'))
 	{
-
-	}
-	if (kbd.KeyIsPressed('S'))
-	{
-
-	}
-	if (kbd.KeyIsPressed('D'))
-	{
-
+		_Coord.X+= _Coord.Sp;
 	}
 
+	if (Kbd.KeyIsPressed('S'))
+	{
+		_Coord.Y += _Coord.Sp;
+	}
+
+	if (Kbd.KeyIsPressed('W'))
+	{
+		_Coord.Y-= _Coord.Sp;
+	}
+}
+
+void Player::wndborder() 
+{
+	const float right = _Coord.X + _Coord.Width;
+	if (_Coord.X <= 4)
+	{
+		_Coord.X = 4;
+	}
+	else if (right >= Graphics::ScreenWidth)
+	{
+		_Coord.X = (Graphics::ScreenWidth - 4) - _Coord.Width;
+	}
+
+	const float bottom = _Coord.Y + _Coord.Height;
+	if (_Coord.Y <= 4)
+	{
+		_Coord.Y = 4;
+	}
+	else if (bottom >= Graphics::ScreenHeight)
+	{
+		_Coord.Y = (Graphics::ScreenHeight - 4) - _Coord.Height;
+	}
 }
