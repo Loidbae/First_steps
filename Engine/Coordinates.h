@@ -8,18 +8,18 @@ public:
 	
 	bool operator<(const Coordinates& OoL)
 	{
-		return X < OoL.X && Y < OoL.Y;
+		return x < OoL.x && y < OoL.y;
 	}
 
 	bool operator>(const Coordinates& OoL) // OoL -> Operation on Location
 	{
-		return X > OoL.X && Y > OoL.Y;
+		return x > OoL.x && y > OoL.y;
 	}
 
 
-	float X;
-	float Y;
-	float Sp;
-	float Width;
-	float Height;
+	float x;
+	float y;
+	float h;
+	float w;
+	float v;
 };
