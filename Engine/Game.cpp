@@ -26,23 +26,19 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	creature()
+	create()
+	
 {
+	
 	
 }
 
 void Game::Go() // This is what happens per frame 
 {
-	Registry();
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
-}
-
-void Game::Registry()
-{
-	creature.Reg_Entity();
 }
 
 void Game::UpdateModel()
@@ -52,5 +48,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	
+	
 	
 } 

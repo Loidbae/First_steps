@@ -12,11 +12,11 @@ Platform::Platform()
 
 void Platform::drawbox(Graphics& gfx) const
 {
-	for (int In = 0; In < (int)pos.width; In++)
+	for (int In = 0; In < (int)rtc.w; In++)
 	{
-		for (int I = 0; I < (int)pos.height; I++)
+		for (int I = 0; I < (int)rtc.h; I++)
 		{
-			gfx.PutPixel(In + (int)pos.x, I + (int)pos.y, Colors::White);
+			gfx.PutPixel(In + (int)rtc.x, I + (int)rtc.y, Colors::White);
 		}
 	}
 }
@@ -41,20 +41,20 @@ void Platform::checksection(player& player)
 
 	// ccP# / collision_checkPoint/x/y/width/height
 
-	const float ccPy = pos.Y - (pos.height / 3);
-	const float ccPh = pos.height / 3;
+	const float ccPy = rtc.y - (rtc.h / 3);
+	const float ccPh = rtc.h / 3;
 
-	const float ccP1x = pos.X + pos.width;
-	const float ccP1w = pos.width / 2;
+	const float ccP1x = rtc.x + rtc.w;
+	const float ccP1w = rtc.w / 2;
 
-	const float ccP2y = pos.Y + pos.height;
-	const float ccP2h = pos.height / 2;
+	const float ccP2y = rtc.y + rtc.h;
+	const float ccP2h = rtc.h / 2;
 
-	const float ccP3x = pos.X - (pos.width / 2);
-	const float ccP3w = pos.width / 2;
+	const float ccP3x = rtc.x - (rtc.w / 2);
+	const float ccP3w = rtc.w / 2;
 
 	// I
-	if (calc_collision(player, pos.X, pos.width, ccPy, ccPh))
+	if (calc_collision(player, rtc.x, rtc.w, ccPy, ccPh))
 	{
 		collision_check = true;
 	}
@@ -64,7 +64,7 @@ void Platform::checksection(player& player)
 	}
 
 	// II
-	if (calc_collision(player, ccP1x, ccP1w, pos.Y, pos.height))
+	if (calc_collision(player, ccP1x, ccP1w, rtc.y, rtc.h))
 	{
 		collision_check1 = true;
 	}
@@ -74,7 +74,7 @@ void Platform::checksection(player& player)
 	}
 
 	// III
-	if (calc_collision(player, pos.X, pos.width, ccP2y, ccP2h))
+	if (calc_collision(player, rtc.x, rtc.w, ccP2y, ccP2h))
 	{
 		collision_check2 = true;
 	}
@@ -84,7 +84,7 @@ void Platform::checksection(player& player)
 	}
 
 	// IV
-	if (calc_collision(player, ccP3x, ccP3w, pos.Y, pos.height))
+	if (calc_collision(player, ccP3x, ccP3w, rtc.y, rtc.h))
 	{
 		collision_check3 = true;
 	}
@@ -97,19 +97,19 @@ void Platform::checksection(player& player)
 void Platform::updateboxcol(player& player) const
 {
 
-	const float boxRight = pos.X + pos.width;
-	const float boxBottom = pos.Y + pos.height;
-	const float entityRight = player.coord.x + player._Coord.width;
-	const float entityBottom = player.coord.y + player._Coord.height;
+	const float boxRight = rtc.x + rtc.w;
+	const float boxBottom = rtc.y + rtc.h;
+	const float entityRight = player.rtc.x + player.rtc.w;
+	const float entityBottom = player.rtc.y + player.rtc.h;
 
 	//Finally _checking if the area is active, if it is -> calculate collision accordingly;
 
 	// Top
 	if (collision_check)
 	{
-		if (entityBottom > pos.Y && player.coord.x <= boxRight && entityRight >= pos.X - 1)
+		if (entityBottom > rtc.y && player.rtc.x <= boxRight && entityRight >= rtc.x - 1)
 		{
-			player.coord.y = (pos.Y - 1) - player._Coord.height - 1;
+			player.rtc.y = (rtc.y - 1) - player.rtc.h - 1;
 
 		}
 	}
@@ -117,9 +117,9 @@ void Platform::updateboxcol(player& player) const
 	// Right Side
 	if (collision_check1)
 	{
-		if (player.coord.x <= boxRight && player.coord.y >= pos.Y && player.coord.y <= boxBottom)
+		if (player.rtc.x <= boxRight && player.rtc.y >= rtc.y && player.rtc.y <= boxBottom)
 		{
-			player.coord.x = boxRight + 1;
+			player.rtc.x = boxRight + 1;
 		}
 
 	}
@@ -127,9 +127,9 @@ void Platform::updateboxcol(player& player) const
 	// Left Side
 	if (collision_check3)
 	{
-		if (entityRight > pos.X && player.coord.y <= boxBottom && entityRight >= pos.Y)
+		if (entityRight > rtc.x && player.rtc.y <= boxBottom && entityRight >= rtc.y)
 		{
-			player.coord.x = (pos.X - 1) - player._Coord.width;
+			player.rtc.x = (rtc.x - 1) - player.rtc.w;
 		}
 	}
 
@@ -138,9 +138,9 @@ void Platform::updateboxcol(player& player) const
 	//Bottom
 	if (collision_check2)
 	{
-		if (player.coord.y <= boxBottom && player.coord.x <= boxRight && entityRight >= pos.X)
+		if (player.rtc.y <= boxBottom && player.rtc.x <= boxRight && entityRight >= rtc.x)
 		{
-			player.coord.y = boxBottom + 1;
+			player.rtc.y = boxBottom + 1;
 		}
 	}
 }
@@ -148,16 +148,16 @@ void Platform::updateboxcol(player& player) const
 bool Platform::calc_collision(player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const
 {
 
-	const float entityRight = player.coord.x + player._Coord.width;
-	const float entityBottom = player.coord.y + player._Coord.height;
+	const float entityRight = player.rtc.x + player.rtc.w;
+	const float entityBottom = player.rtc.y + player.rtc.h;
 
 	const float PointRight = ObjectX + Objectwidth;
 	const float PointBottom = ObjectY + Objectheight;
 
 	return entityRight >= ObjectX &&
-		player.coord.x <= PointRight &&
+		player.rtc.x <= PointRight &&
 		entityBottom >= ObjectY &&
-		player.coord.y <= PointBottom;
+		player.rtc.y <= PointBottom;
 }
 
 void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
@@ -172,21 +172,21 @@ void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
 	}
 
 	// Drawing visuals to _check if the collision areas are on the right place 
-	const int intposX = (int)pos.X;
-	const int intposY = (int)pos.Y;
-	const int intposW = (int)pos.width;
-	const int intposH = (int)pos.height;
+	const int intposX = (int)rtc.x;
+	const int intposY = (int)rtc.y;
+	const int intposW = (int)rtc.w;
+	const int intposH = (int)rtc.h;
 
 	const int InboxY = intposY - (intposH / 3);
 	const int inboxright = intposX + intposW;
 	const int inboxbottom = intposY + intposH;
 
-	const float entityBottom = player.coord.y + player._Coord.height;
+	const float entityBottom = player.rtc.y + player.rtc.h;
 
 
 
 
-		if (player.coord.y <= intposY)
+		if (player.rtc.y <= intposY)
 		{
 			
 
@@ -206,7 +206,7 @@ void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
 		}
 
 
-		if (entityBottom >= intposY && player.coord.y <= inboxbottom && player.coord.x <= intposX)
+		if (entityBottom >= intposY && player.rtc.y <= inboxbottom && player.rtc.x <= intposX)
 		{
 
 			for (int I = 0; I < intposW / 2; I++)
@@ -225,7 +225,7 @@ void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
 		}
 
 
-		if (entityBottom >= intposY && player.coord.y <= inboxbottom && player.coord.x >= inboxright)
+		if (entityBottom >= intposY && player.rtc.y <= inboxbottom && player.rtc.x >= inboxright)
 		{
 
 			for (int I = 0; I < intposW / 2; I++)
@@ -241,7 +241,7 @@ void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
 			}
 		}
 
-		if (player.coord.y >= intposY + intposH)
+		if (player.rtc.y >= intposY + intposH)
 		{
 
 			for (int I = 0; I < intposW; I++)

@@ -141,6 +141,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Entity_handler.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="TestEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TestEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">

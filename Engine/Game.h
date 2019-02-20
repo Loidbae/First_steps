@@ -39,17 +39,15 @@ public:
 
 
 private:
-	void Registry();
 	void ComposeFrame();
 	void UpdateModel();
 
 private:
-
-	
 	MainWindow& wnd;
 	Graphics gfx;
 	std::random_device rd;
 	std::mt19937 rng;
-	Entity creature;
+	Entity create;
 	
+
 };
