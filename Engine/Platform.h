@@ -1,6 +1,6 @@
 #pragma once
 #include "Graphics.h"
-#include "Locations.h"
+#include "Coordinates.h"
 #include "Player.h"
 #include <random>
 
@@ -11,30 +11,30 @@ public:
 		
 	void InitBoxes(mt19937& Rng)
 	{
-		_Pos.X = _PosX(Rng);
-		_Pos.Y = _PosY(Rng);
-		_Pos.Width = _DrawCordX(Rng);
-		_Pos.Height = _DrawCordY(Rng);
+		rtc.x = posX(Rng);
+		rtc.y = posY(Rng);
+		rtc.w = drawCordX(Rng);
+		rtc.h = drawCordY(Rng);
 	}
 
 	void drawbox(Graphics& Gfx) const ;
-	void checksection(Player& Player);
-	void updateboxcol(Player& Player) const;
-	bool calc_collision(Player& Player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const;
-	void checkinboxvisualtest(Graphics& Gfx, Player& Player);
+	void checksection(player& player);
+	void updateboxcol(player& player) const;
+	bool calc_collision(player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const;
+	void checkinboxvisualtest(Graphics& Gfx, player& player);
 
-	Coordinates _Pos;
+	Coordinates rtc;
 	Color c = Colors::Green;
 
 private:
-	uniform_real_distribution<float> _PosX;
-	uniform_real_distribution<float> _PosY;
-	uniform_real_distribution<float> _DrawCordX;
-	uniform_real_distribution<float> _DrawCordY;
+	uniform_real_distribution<float> posX;
+	uniform_real_distribution<float> posY;
+	uniform_real_distribution<float> drawCordX;
+	uniform_real_distribution<float> drawCordY;
 
-	bool CollisionCheck;
-	bool CollisionCheck1;
-	bool CollisionCheck2;
-	bool CollisionCheck3;
+	bool collision_check;
+	bool collision_check1;
+	bool collision_check2;
+	bool collision_check3;
 
 };

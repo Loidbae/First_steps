@@ -1,15 +1,25 @@
 #pragma once
-class coodinates
+
+using namespace std;
+
+class Coordinates
 {
 public:
-
-	void operator>(int x,int y)
-	{
 	
+	bool operator<(const Coordinates& OoL)
+	{
+		return x < OoL.x && y < OoL.y;
 	}
 
-	int x;
-	int y;
-	int h;
-	int w;
+	bool operator>(const Coordinates& OoL) // OoL -> Operation on Location
+	{
+		return x > OoL.x && y > OoL.y;
+	}
+
+
+	float x;
+	float y;
+	float h;
+	float w;
+	float v;
 };

@@ -1,61 +1,61 @@
 #include "Player.h"
 
-void Player::draw(Graphics& GfX) const
+void player::draw(Graphics& GfX) const
 {
 	// simple rec draw function
 
-	for (int I = 0; I < (int)_Coord.Height; I++)
+	for (int I = 0; I < (int)rtc.h; I++)
 	{
-		for (int In = 0; In < (int)_Coord.Width; In++)
+		for (int In = 0; In < (int)rtc.w; In++)
 		{
-			GfX.PutPixel(I+(int)_Coord.X,In+(int)_Coord.Y,255,255,255);
+			GfX.PutPixel(I+(int)rtc.x,In+(int)rtc.y,255,255,255);
 		}
 	}
 }
 
-void Player::move(Keyboard & Kbd)
+void player::move(Keyboard & Kbd)
 {
 
 	if (Kbd.KeyIsPressed('A'))
 	{
-		_Coord.X-= _Coord.Sp;
+		rtc.x-= rtc.v;
 	}
 	
 	if (Kbd.KeyIsPressed('D'))
 	{
-		_Coord.X+= _Coord.Sp;
+		rtc.x+= rtc.v;
 	}
 
 	if (Kbd.KeyIsPressed('S'))
 	{
-		_Coord.Y += _Coord.Sp;
+		rtc.y += rtc.v;
 	}
 
 	if (Kbd.KeyIsPressed('W'))
 	{
-		_Coord.Y-= _Coord.Sp;
+		rtc.y-= rtc.v;
 	}
 }
 
-void Player::wndborder() 
+void player::wndborder() 
 {
-	const float right = _Coord.X + _Coord.Width;
-	if (_Coord.X <= 4)
+	const float right = rtc.x + rtc.w;
+	if (rtc.x <= 4)
 	{
-		_Coord.X = 4;
+		rtc.x = 4;
 	}
 	else if (right >= Graphics::ScreenWidth)
 	{
-		_Coord.X = (Graphics::ScreenWidth - 4) - _Coord.Width;
+		rtc.x = (Graphics::ScreenWidth - 4) - rtc.w;
 	}
 
-	const float bottom = _Coord.Y + _Coord.Height;
-	if (_Coord.Y <= 4)
+	const float bottom = rtc.y + rtc.h;
+	if (rtc.y <= 4)
 	{
-		_Coord.Y = 4;
+		rtc.y = 4;
 	}
 	else if (bottom >= Graphics::ScreenHeight)
 	{
-		_Coord.Y = (Graphics::ScreenHeight - 4) - _Coord.Height;
+		rtc.y = (Graphics::ScreenHeight - 4) - rtc.h;
 	}
 }

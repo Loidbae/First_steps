@@ -21,52 +21,34 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game(MainWindow& Wnd)
+Game::Game(MainWindow& wnd)
 	:
-	_Wnd(Wnd),
-	_Gfx(Wnd),
-	_Rng(_Rd())
+	wnd(wnd),
+	gfx(wnd),
+	rng(rd()),
+	create()
 	
 {
-	for (int i = 0; i < Dex; i++)
-	{
-		_Platform[i].InitBoxes(_Rng);
-	}
+	
+	
 }
 
-void Game::Go()
+void Game::Go() // This is what happens per frame 
 {
-	_Gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
-	_Gfx.EndFrame();
+	gfx.EndFrame();
 }
-
-
 
 void Game::UpdateModel()
 {	//Note to myself, collsion calculation always AFTER Objectmovement.
-	const float Dt = _Ft.Mark();
 
-	_Character.move(_Wnd.kbd);
-
-	for (int i = 0; i < Dex; i++)
-	{
-		_Platform[i].checksection(_Character);
-		_Platform[i].updateboxcol(_Character);
-	}
-	_Character.wndborder();
-	
 }
 
 void Game::ComposeFrame()
 {
-	_Character.draw(_Gfx);
-
-	for (int i = 0; i < Dex; i++)
-	{
-		_Platform[i].drawbox(_Gfx);
-		_Platform[i].checkinboxvisualtest(_Gfx, _Character);
-	}
+	
+	
 	
 } 

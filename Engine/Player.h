@@ -1,19 +1,19 @@
 #pragma once
 #include "Graphics.h"
 #include "Keyboard.h"
-#include "Locations.h"
+#include "Coordinates.h"
 #include <chrono>
 
-class Player
+class player
 {
 public:
-	Player()
+	player()
 	{
-		_Coord.X = 40;
-		_Coord.Y = 40;
-		_Coord.Width = 10;
-		_Coord.Height = 10;
-		_Coord.Sp = 2.05f;
+		rtc.x = 40; // Starting point
+		rtc.y = 40; //---------------
+		rtc.w = 10; // player size
+		rtc.h = 10; //-----------
+		rtc.v = 2.05f; // player Speed 
 	}
 
 	void draw(Graphics& Gfx)const;
@@ -21,5 +21,5 @@ public:
 	void wndborder();
 
 
-	Coordinates _Coord;
+	Coordinates rtc; // real-time-coordinates
 };
