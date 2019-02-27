@@ -1,31 +1,11 @@
 #include "Entity.h"
 
-float Entity::Health_Scaling(float unit_baseHP, int unit_level)
+void entity::Entitysprites(Graphics& gfx)
 {
-
-	return 0.0f;
+	monkey.RM_Visuals(gfx);
 }
 
-float Entity::Armor_Scaling(float unit_armor, int unit_level)
+void entity::EntityInits(mt19937 & rng)
 {
-	return 0.0f;
-}
-
-float Entity::Attack_Power()
-{
-	return 0.0f;
-}
-
-void Entity::Special_Executions(std::mt19937& rng)
-{
-	Monkey[].RedmonkeySpawn(rng);
-}
-
-void Entity::EntitySprites(Graphics& gfx) const
-{
-	Monkey[].RM_Visuals(gfx);
-}
-
-void Entity::EntityMovement() const
-{
+	monkey.RedmonkeySpawn(rng);
 }

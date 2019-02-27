@@ -29,7 +29,10 @@ Game::Game(MainWindow& wnd)
 	create()
 	
 {
-	
+	for (int i = 0; i < max; i++)
+	{
+		create[i].EntityInits(rng);
+	}
 	
 }
 
@@ -48,7 +51,10 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	
+	for (int i = 0; i < max; i++)
+	{
+		create[i].Entitysprites(gfx);
+	}
 	
 	
 } 

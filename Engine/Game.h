@@ -43,11 +43,13 @@ private:
 	void UpdateModel();
 
 private:
+	static constexpr int max = 11;
+
 	MainWindow& wnd;
 	Graphics gfx;
 	std::random_device rd;
 	std::mt19937 rng;
-	Entity create;
+	entity create[max];
 	
 
 };

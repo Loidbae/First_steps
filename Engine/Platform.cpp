@@ -26,7 +26,7 @@ void Platform::checksection(player& player)
 	/*
 	     _______________
 	 ___|_______I_______|___
-	|   | _____________ |   |   My idea here is to surround the object with sections, which are indipendent,
+	|   | _____________ |   |   My idea here is to surround the object with sections,
 	|   ||             ||   |   when a section is activated, by steping in the designated area,
 	|   ||             ||   |   the corresponding side-collision gets calculated.
 	|   ||             ||   |
