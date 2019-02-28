@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void player::draw(Graphics& GfX) const
+void Player::draw(Graphics& gfX) const
 {
 	// simple rec draw function
 
@@ -8,36 +8,36 @@ void player::draw(Graphics& GfX) const
 	{
 		for (int In = 0; In < (int)rtc.w; In++)
 		{
-			GfX.PutPixel(I+(int)rtc.x,In+(int)rtc.y,255,255,255);
+			gfX.PutPixel(I+(int)rtc.x,In+(int)rtc.y,255,255,255);
 		}
 	}
 }
 
-void player::move(Keyboard & Kbd)
+void Player::move(Keyboard & kbd)
 {
 
-	if (Kbd.KeyIsPressed('A'))
+	if (kbd.KeyIsPressed('A'))
 	{
 		rtc.x-= rtc.v;
 	}
 	
-	if (Kbd.KeyIsPressed('D'))
+	if (kbd.KeyIsPressed('D'))
 	{
 		rtc.x+= rtc.v;
 	}
 
-	if (Kbd.KeyIsPressed('S'))
+	if (kbd.KeyIsPressed('S'))
 	{
 		rtc.y += rtc.v;
 	}
 
-	if (Kbd.KeyIsPressed('W'))
+	if (kbd.KeyIsPressed('W'))
 	{
 		rtc.y-= rtc.v;
 	}
 }
 
-void player::wndborder() 
+void Player::wndborder() 
 {
 	const float right = rtc.x + rtc.w;
 	if (rtc.x <= 4)

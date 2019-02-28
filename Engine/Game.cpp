@@ -26,14 +26,15 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	create()
+	kbd(),
+	player()
+	
 	
 {
 	for (int i = 0; i < max; i++)
 	{
-		create[i].EntityInits(rng);
+		object[i].InitBoxes(rng);
 	}
-	
 }
 
 void Game::Go() // This is what happens per frame 
@@ -46,14 +47,23 @@ void Game::Go() // This is what happens per frame
 
 void Game::UpdateModel()
 {	//Note to myself, collsion calculation always AFTER Objectmovement.
+	player.move(kbd);
 
+	for (int i = 0; i < max; i++)
+	{
+		object[i].checksection(player);
+		object[i].updateboxcol(player);
+	}
 }
 
 void Game::ComposeFrame()
 {
+	player.draw(gfx);
+	
 	for (int i = 0; i < max; i++)
 	{
-		create[i].Entitysprites(gfx);
+		object[i].drawbox(gfx);
+		object[i].checkinboxvisualtest(gfx, player);
 	}
 	
 	

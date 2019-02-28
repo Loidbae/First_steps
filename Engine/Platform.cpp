@@ -4,7 +4,7 @@ Platform::Platform()
 	:
 	posX(50, 659),
 	posY(50, 459),
-	drawCordX(22, 50),
+	drawCordX(30, 50),
 	drawCordY(50, 60)
 {
 
@@ -21,7 +21,7 @@ void Platform::drawbox(Graphics& gfx) const
 	}
 }
 
-void Platform::checksection(player& player)
+void Platform::checksection(Player& player)
 {
 	/*
 	     _______________
@@ -94,7 +94,7 @@ void Platform::checksection(player& player)
 	}
 }
 
-void Platform::updateboxcol(player& player) const
+void Platform::updateboxcol(Player& player) const
 {
 
 	const float boxRight = rtc.x + rtc.w;
@@ -145,7 +145,7 @@ void Platform::updateboxcol(player& player) const
 	}
 }
 
-bool Platform::calc_collision(player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const
+bool Platform::calc_collision(Player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const
 {
 
 	const float entityRight = player.rtc.x + player.rtc.w;
@@ -160,7 +160,7 @@ bool Platform::calc_collision(player& player, float ObjectX, float Objectwidth, 
 		player.rtc.y <= PointBottom;
 }
 
-void Platform::checkinboxvisualtest(Graphics& gfx, player& player)
+void Platform::checkinboxvisualtest(Graphics& gfx, Player& player)
 {
 	if (collision_check || collision_check1 || collision_check2 || collision_check3)
 	{

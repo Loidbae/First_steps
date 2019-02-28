@@ -1,45 +1,35 @@
 #pragma once
 #include <random>
 #include "Coordinates.h"
-#include "Graphics.h"
 
-class Redmonkey
+class TestEntity
 {
-
 public:
 
-	Redmonkey()
-		:
-		rtc(),
-		spawn_X(60,740),
-		spawn_Y(60,540)
-	{
+	TestEntity();
 
+	void Init(mt19937& rng)
+	{
+		rtc.x = OriginX(rng);
+		rtc.y = OriginY(rng);
 	}
 
+	void InitCon(mt19937& rng)
+	{
+		rtc.x = conX(rng);
+		rtc.y = conY(rng);
+	}
 
-	void RedmonkeySpawn(mt19937& rng);
-	void RM_Visuals(Graphics& gfx)const;
-
-	void set_bool(bool statement);
-	bool get_bool();
-
-	int Level;
-	float Base_Hp;
-	float Armor;
-	float Attack_Power;
-	float Max_Hp;
-	float start_x;
-	float start_y;
-	float velocity;
-
-	int monkeys = 10;
-	bool first_spawned;
+	void spawn();
 
 private:
 	Coordinates rtc;
-	std::uniform_int_distribution<int> spawn_X;
-	std::uniform_int_distribution<int> spawn_Y;
+
+	std::uniform_real_distribution<float>OriginX;
+	std::uniform_real_distribution<float>OriginY;
+
+	std::uniform_real_distribution<float>conX;
+	std::uniform_real_distribution<float>conY;
+
 
 };
-

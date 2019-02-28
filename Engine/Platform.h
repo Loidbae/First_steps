@@ -9,19 +9,19 @@ class Platform
 public:
 	Platform();
 		
-	void InitBoxes(mt19937& Rng)
+	void InitBoxes(mt19937& rng)
 	{
-		rtc.x = posX(Rng);
-		rtc.y = posY(Rng);
-		rtc.w = drawCordX(Rng);
-		rtc.h = drawCordY(Rng);
+		rtc.x = posX(rng);
+		rtc.y = posY(rng);
+		rtc.w = drawCordX(rng);
+		rtc.h = drawCordY(rng);
 	}
 
 	void drawbox(Graphics& Gfx) const ;
-	void checksection(player& player);
-	void updateboxcol(player& player) const;
-	bool calc_collision(player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const;
-	void checkinboxvisualtest(Graphics& Gfx, player& player);
+	void checksection(Player& player);
+	void updateboxcol(Player& player) const;
+	bool calc_collision(Player& player, float ObjectX, float Objectwidth, float ObjectY, float Objectheight) const;
+	void checkinboxvisualtest(Graphics& Gfx, Player& player);
 
 	Coordinates rtc;
 	Color c = Colors::Green;

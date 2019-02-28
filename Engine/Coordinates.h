@@ -6,6 +6,8 @@ class Coordinates
 {
 public:
 	
+	Coordinates() = default;
+
 	bool operator<(const Coordinates& OoL)
 	{
 		return x < OoL.x && y < OoL.y;

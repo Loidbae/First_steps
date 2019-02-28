@@ -25,7 +25,8 @@
 #include "Graphics.h"
 #include <random>
 #include "FrameTimer.h"
-#include "Entity.h"
+#include "Platform.h"
+#include "Player.h"
 
 class Game
 {
@@ -39,17 +40,19 @@ public:
 
 
 private:
-	void ComposeFrame();
 	void UpdateModel();
+	void ComposeFrame();
 
 private:
-	static constexpr int max = 11;
+	static constexpr int max = 21;
 
 	MainWindow& wnd;
 	Graphics gfx;
 	std::random_device rd;
 	std::mt19937 rng;
-	entity create[max];
+	Keyboard kbd;
+	Player player;
+	Platform object[max];
 	
 
 };

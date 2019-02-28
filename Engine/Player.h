@@ -4,10 +4,10 @@
 #include "Coordinates.h"
 #include <chrono>
 
-class player
+class Player
 {
 public:
-	player()
+	Player()
 	{
 		rtc.x = 40; // Starting point
 		rtc.y = 40; //---------------
@@ -16,8 +16,8 @@ public:
 		rtc.v = 2.05f; // player Speed 
 	}
 
-	void draw(Graphics& Gfx)const;
-	void move(Keyboard& Kbd);
+	void draw(Graphics& gfx)const;
+	void move(Keyboard& kbd);
 	void wndborder();
 
 
